@@ -54,7 +54,7 @@
 
         <div class="row unsaved-target">
             Score
-            <input type="number" class="score" id="player1score">
+            <input type="number" class="score" id="player1score" value="0">
         </div>
     </div>
 
@@ -67,7 +67,7 @@
 
         <div class="row unsaved-target">
             Score
-            <input type="number" class="score" id="player2score">
+            <input type="number" class="score" id="player2score" value="0">
         </div>
     </div>
 
@@ -78,36 +78,61 @@
 <script>
     'use strict';
 
+    const api = 'http://localhost:3000/data'
     const q = document.querySelector.bind(document)
     const qa = document.querySelectorAll.bind(document)
     const unsavedTargetSelector = '.unsaved-target'
     const unsavedClass = 'unsaved'
-    const dataKey = 'KRK_FGC_MATCH_OVERLAY_DATA'
-    const getData = () => JSON.parse(localStorage.getItem(dataKey))
-    const setData = (val) => localStorage.setItem(dataKey, JSON.stringify(val))
-    const defaultData = {
-        game: '',
-        title: '',
-        player1name: '',
-        player1score: '',
-        player2name: '',
-        player2score: ''
+
+    const getData = () => {
+        return fetch(api).then((res) => {
+            return res.text()
+        }).then(text => {
+            data = JSON.parse(text)
+        })
+    }
+    const setData = (val) => {
+        return fetch(api, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                },
+            body: JSON.stringify(val),
+        })
+    }
+    const resetData = (val) => {
+        return fetch(api, {
+            method: "DELETE",
+        })
     }
 
+    // const defaultData = {
+    //     game: '',
+    //     title: '',
+    //     player1name: '',
+    //     player1score: '',
+    //     player2name: '',
+    //     player2score: ''
+    // }
+
+    let data
     let el
     let tempData
+    let initDone
 
     function main() {
-        initData()
-        initEls()
+        initData().then(() => {
+            initEls()
+            populateFields()
+            initDone = true
+        })
     }
 
     function initData() {
-        if (!getData()) {
-            setData(defaultData)
-        }
+        return getData().then(() => {
+            tempData = { ...data }
+        })
 
-        tempData = getData()
     }
 
     function initEls() {
@@ -134,13 +159,19 @@
     }
 
     function setTempField(target, field) {
+        if (!initDone) return
+
         tempData[field] = target.value
 
-        if (tempData[field] === getData()[field]) {
+        if (tempData[field] === data[field]) {
             target.closest(unsavedTargetSelector).classList.remove(unsavedClass)
         } else {
             target.closest(unsavedTargetSelector).classList.add(unsavedClass)
         }
+    }
+
+    function populateFields() {
+        Object.keys(data).forEach((k) => el[k].value = data[k])
     }
 
     function clearUnsaved() {
@@ -148,15 +179,17 @@
     }
 
     function update() {
-        setData(tempData)
-        clearUnsaved()
+        setData(tempData).then(() => {
+            clearUnsaved()
+        })
     }
 
     function reset() {
-        localStorage.removeItem(dataKey)
-        el.form.reset()
-        clearUnsaved()
-        initData()
+        resetData().then(() => {
+            el.form.reset()
+            clearUnsaved()
+            initData()
+        })
     }
 
     window.onload = main
