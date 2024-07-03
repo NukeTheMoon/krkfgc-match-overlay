@@ -99,10 +99,9 @@
         left: 50%;
         transform: translateX(-50%);
         top: 922px;
-
-        img {
-            object-fit: cover;
-        }
+    }
+    #logo img {
+        object-fit: cover;
     }
 
     .acpr #players {
@@ -123,10 +122,9 @@
     }
     .uni2 #logo {
         top: 158px;
-
-        img {
-            width: 57px;
-        }
+    }
+    .uni2 #logo img {
+        width: 57px;
     }
 
 </style>
@@ -192,6 +190,7 @@
 
             Object.keys(data).forEach((k) => { if (el[k]) el[k].innerHTML = data[k] })
 
+            el.main.className = ''
             el.main.classList.add(data.game)
         })
 
