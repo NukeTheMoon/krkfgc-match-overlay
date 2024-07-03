@@ -1,0 +1,163 @@
+<style>
+    form {
+        display: inline-flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    form > div {
+        display: flex;
+        gap: 10px;
+    }
+
+    input, select {
+        flex-grow: 1;
+    }
+
+    .row {
+        display: flex;
+        gap: 10px;
+    }
+
+    .score {
+        width: 50px;
+    }
+
+    .unsaved {
+        background-color: pink;
+    }
+</style>
+
+<form id="form">
+    <div class="unsaved-target">
+        Game
+        <select name="game" id="game">
+            <option value="">overlay hidden</option>
+            <option value="uni2">UNI2</option>
+            <option value="acpr">ACPR</option>
+            <option value="bbcf">BBCF</option>
+            <option value="t8">T8</option>
+        </select>
+    </div>
+
+    <div class="unsaved-target">
+        Title
+        <input type="text" id="title">
+    </div>
+
+    Player 1
+    <div class="row">
+        <div class="row unsaved-target">
+            Name
+            <input type="text" id="player1name">
+        </div>
+
+        <div class="row unsaved-target">
+            Score
+            <input type="number" class="score" id="player1score">
+        </div>
+    </div>
+
+    Player 2
+    <div class="row">
+        <div class="row unsaved-target">
+            Name
+            <input type="text" id="player2name">
+        </div>
+
+        <div class="row unsaved-target">
+            Score
+            <input type="number" class="score" id="player2score">
+        </div>
+    </div>
+
+    <button type="button" id="update">UPDATE OVERLAY!</button>
+    <button type="button" id="_reset">reset everything</button>
+</form>
+
+<script>
+    'use strict';
+
+    const q = document.querySelector.bind(document)
+    const qa = document.querySelectorAll.bind(document)
+    const unsavedTargetSelector = '.unsaved-target'
+    const unsavedClass = 'unsaved'
+    const dataKey = 'KRK_FGC_MATCH_OVERLAY_DATA'
+    const getData = () => JSON.parse(localStorage.getItem(dataKey))
+    const setData = (val) => localStorage.setItem(dataKey, JSON.stringify(val))
+    const defaultData = {
+        game: '',
+        title: '',
+        player1name: '',
+        player1score: '',
+        player2name: '',
+        player2score: ''
+    }
+
+    let el
+    let tempData
+
+    function main() {
+        initData()
+        initEls()
+    }
+
+    function initData() {
+        if (!getData()) {
+            setData(defaultData)
+        }
+
+        tempData = getData()
+    }
+
+    function initEls() {
+        el = {
+            form: q('#form'),
+            game: document.querySelector('#game'),
+            title: q('#title'),
+            player1name: q('#player1name'),
+            player1score: q('#player1score'),
+            player2name: q('#player2name'),
+            player2score: q('#player2score'),
+            update: q('#update'),
+            reset: q('#_reset'),
+        }
+
+        el.game.oninput = ({ target }) => { setTempField(target, 'game') }
+        el.title.oninput = ({ target }) => { setTempField(target, 'title') }
+        el.player1name.oninput = ({ target }) => { setTempField(target, 'player1name') }
+        el.player1score.oninput = ({ target }) => { setTempField(target, 'player1score') }
+        el.player2name.oninput = ({ target }) => { setTempField(target, 'player2name') }
+        el.player2score.oninput = ({ target }) => { setTempField(target, 'player2score') }
+        el.update.onclick = update
+        el.reset.onclick = reset
+    }
+
+    function setTempField(target, field) {
+        tempData[field] = target.value
+
+        if (tempData[field] === getData()[field]) {
+            target.closest(unsavedTargetSelector).classList.remove(unsavedClass)
+        } else {
+            target.closest(unsavedTargetSelector).classList.add(unsavedClass)
+        }
+    }
+
+    function clearUnsaved() {
+        Array.from(qa(unsavedTargetSelector)).forEach(el => el.classList.remove(unsavedClass) )
+    }
+
+    function update() {
+        setData(tempData)
+        clearUnsaved()
+    }
+
+    function reset() {
+        localStorage.removeItem(dataKey)
+        el.form.reset()
+        clearUnsaved()
+        initData()
+    }
+
+    window.onload = main
+</script>

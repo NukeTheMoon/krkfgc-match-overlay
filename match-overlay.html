@@ -1,0 +1,158 @@
+<style>
+    @font-face {
+        font-family: bahnschrift;
+        src: url("assets/bahnschrift.ttf")
+    }
+
+    body {
+        font-family: bahnschrift;
+        margin: 0;
+        padding: 0;
+    }
+
+    main {
+        width: 1920px;
+        height: 1080px;
+        opacity: 0;
+        position: relative;
+    }
+
+    main.uni2,
+    main.acpr,
+    main.bbcf,
+    main.t8 {
+        opacity: 1;
+    }
+
+    p {
+        color: #fff;
+        text-transform: uppercase;
+    }
+
+    .hide {
+        opacity: 0;
+    }
+
+    #titleBox {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-image: url('assets/titlebox.svg');
+        background-repeat: no-repeat;
+        width: 403px;
+        height: 51px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        p {
+            font-size: 24px;
+        }
+    }
+
+    #players {
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        width: 100%;
+    }
+
+    #player1,
+    #player2 {
+        display: grid;
+        width: 628px;
+        height: 63px;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
+
+    #player1 {
+        grid-template-columns: auto 130px;
+        background-image: url('assets/player1.svg');
+
+    }
+
+    #player2 {
+        grid-template-columns: 130px auto;
+        background-image: url('assets/player2.svg');
+    }
+
+    #logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .acpr #players {
+        top: 21px;
+        gap: 335px;
+    }
+    .acpr #logo {
+        top: 922px;
+    }
+</style>
+
+<main id="main">
+    <div id="titleBox">
+        <p id="title"></p>
+    </div>
+    <div id="players">
+        <div id="player1">
+            <p id="player1name"></p>
+            <p id="player1score"></p>
+        </div>
+        <div id="player2">
+            <p id="player2name"></p>
+            <p id="player2score"></p>
+        </div>
+    </div>
+    <div id="logo">
+        <img src="assets/logo.png">
+    </div>
+</main>
+
+<script>
+    const q = document.querySelector.bind(document)
+    const dataKey = 'KRK_FGC_MATCH_OVERLAY_DATA'
+    const getData = () => JSON.parse(localStorage.getItem(dataKey))
+
+    let el
+
+    function main() {
+        initEls()
+        updateFields()
+        window.addEventListener('storage', onStorage)
+    }
+
+    function initEls() {
+        el = {
+            main: q('#main'),
+            titleBox: q('#titleBox'),
+            title: q('#title'),
+            player1name: q('#player1name'),
+            player1score: q('#player1score'),
+            player2name: q('#player2name'),
+            player2score: q('#player2score'),
+        }
+    }
+
+    function onStorage({ key }) {
+        if (key === dataKey) updateFields()
+    }
+
+    function updateFields() {
+        const data = getData()
+
+        if (!data.game) {
+            el.main.className = ''
+            return
+        }
+
+        Object.keys(data).forEach((k) => { if (el[k]) el[k].innerHTML = data[k] })
+
+        el.main.classList.add(data.game)
+    }
+
+    window.onload = main
+</script>
