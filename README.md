@@ -1,9 +1,11 @@
 HOW TO
 
-npm i
-node server.js
+> npm i
+> node server.js
 
-open control-panel.html in browser other than IE
+install assets/bahnschrift.ttf
+
+open control-panel.html in browser that isn't IE or Lynx
 
 pass match-overlay.html to OBS browser source as local file, width=1920 height=1080
 
@@ -12,6 +14,6 @@ pass match-overlay.html to OBS browser source as local file, width=1920 height=1
 
 TODO
 
-font-stretch and font-weight doen't work in obs
-add spectral vs generation
-animate updates
+bug: font-stretch doesn't work in obs when using font-face
+feat: add spectral vs generation
+feat: animate updates

@@ -1,18 +1,20 @@
 <style>
-    /* font face not working wtf */
     @font-face {
-        font-family: bahnschrift2;
-        src: local("Bahnschrift") url("assets/bahnschrift.ttf");
+        /* font-stretch not working in OBS :( */
+        font-family: bahnschriftLocal;
+        src: url('assets/bahnschrift.ttf') format('truetype-variations');
+        font-weight: normal 800;
+        font-stretch: normal condensed 50% 100%;
     }
 
     body {
-        font-family: bahnschrift;
+        font-family: bahnschrift, bahnschriftLocal;
         margin: 0;
         padding: 0;
         font-weight: 800;
     }
     p {
-        font-stretch: condensed;
+        font-stretch: 50%;
         color: #fff;
         text-transform: uppercase;
         margin: 0;
