@@ -1,19 +1,23 @@
-HOW TO
+# HOW TO
 
-> npm i
-> node server.js
+```
+npm i
+node server.js
+```
 
 install assets/bahnschrift.ttf
 
-open control-panel.html in browser that isn't IE or Lynx
+open control-panel.html in a browser that isn't IE or Lynx
 
 pass match-overlay.html to OBS browser source as local file, width=1920 height=1080
 
+select a game in control-panel.html and hit UPDATE OVERLAY!
 
 ---
 
-TODO
+# TODO
 
-bug: font-stretch doesn't work in obs when using font-face
-feat: add spectral vs generation
-feat: animate updates
+- [ ] bug: font-stretch doesn't work in OBS when using font-face
+- [ ] feat: add spectral vs generation support
+- [ ] feat: animate updates
+- [ ] feat: error states
