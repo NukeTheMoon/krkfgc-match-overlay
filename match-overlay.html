@@ -1,16 +1,18 @@
 <style>
     @font-face {
         font-family: bahnschrift;
-        src: url("assets/bahnschrift.ttf")
+        font-stretch: condensed normal 50%;
+        src: url("assets/bahnschrift.ttf") format('truetype');
     }
 
     body {
         font-family: bahnschrift;
-        font-stretch: condensed;
         margin: 0;
         padding: 0;
+        font-weight: 800;
     }
     p {
+        font-stretch: 50%;
         color: #fff;
         text-transform: uppercase;
         margin: 0;
@@ -40,10 +42,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-
-        p {
-            font-size: 30px;
-        }
+        font-size: 30px;
     }
     #players {
         display: flex;
@@ -129,7 +128,6 @@
     .uni2 #logo img {
         width: 57px;
     }
-
 </style>
 
 <main id="main">
