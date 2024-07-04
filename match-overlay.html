@@ -55,22 +55,22 @@
         position: absolute;
         width: 100%;
     }
-    #player1,
-    #player2 {
+    #p1,
+    #p2 {
         width: 628px;
         height: 63px;
         background-size: contain;
         background-repeat: no-repeat;
         position: relative;
     }
-    #player1 {
-        background-image: url('assets/player1.svg');
+    #p1 {
+        background-image: url('assets/p1.svg');
     }
-    #player2 {
-        background-image: url('assets/player2.svg');
+    #p2 {
+        background-image: url('assets/p2.svg');
     }
-    #player1name,
-    #player2name {
+    #p1name,
+    #p2name {
         position: absolute;
         top: 2px;
         width: 530px;
@@ -81,8 +81,8 @@
         justify-content: center;
         align-items: center;
     }
-    #player1score,
-    #player2score {
+    #p1score,
+    #p2score {
         position: absolute;
         width: 160px;
         height: 100%;
@@ -93,12 +93,12 @@
         align-items: center;
         font-stretch: normal;
     }
-    #player2name,
-    #player1score {
+    #p2name,
+    #p1score {
         right: 0;
     }
-    #player1name,
-    #player2score {
+    #p1name,
+    #p2score {
         left: 0;
     }
     #logo {
@@ -114,26 +114,26 @@
     .acpr #players {
         top: 21px;
     }
-    .acpr #player1 {
+    .acpr #p1 {
         margin-right: 335px; 
     }
     .bbcf #players {
         top: 17px;
     }
-    .bbcf #player1 {
+    .bbcf #p1 {
         margin-right: 335px;
     }
     .t8 #players {
         top: 11px;
     }
-    .t8 #player1 {
+    .t8 #p1 {
         margin-right: 490px;
     }
     .uni2 #players {
         top: 22px;
         gap: 354px;
     }
-    .uni2 #player1 {
+    .uni2 #p1 {
         margin-right: 354px;
     }
     .uni2 #logo {
@@ -149,13 +149,13 @@
         <p id="title"></p>
     </div>
     <div id="players">
-        <div id="player1">
-            <p id="player1name"></p>
-            <p id="player1score"></p>
+        <div id="p1">
+            <p id="p1name"></p>
+            <p id="p1score"></p>
         </div>
-        <div id="player2">
-            <p id="player2score"></p>
-            <p id="player2name"></p>
+        <div id="p2">
+            <p id="p2score"></p>
+            <p id="p2name"></p>
         </div>
     </div>
     <div id="logo">
@@ -164,38 +164,32 @@
 </main>
 
 <script>
+    'use strict';
+
     const q = document.querySelector.bind(document)
     const api = 'http://localhost:2137/data'
 
-    const getData = () => {
-        return fetch(api).then((res) => {
-            return res.text()
-        }).then(text => {
-            data = JSON.parse(text)
-        })
-    }
-
     let el
     let data
+
+    const getData = () => fetch(api).then((res) => res.text()).then(text => { data = JSON.parse(text) })
 
     function main() {
         initEls()
         updateFields()
         setInterval(updateFields, 1000)
     }
-
     function initEls() {
         el = {
             main: q('#main'),
             titleBox: q('#titleBox'),
             title: q('#title'),
-            player1name: q('#player1name'),
-            player1score: q('#player1score'),
-            player2name: q('#player2name'),
-            player2score: q('#player2score'),
+            p1name: q('#p1name'),
+            p1score: q('#p1score'),
+            p2name: q('#p2name'),
+            p2score: q('#p2score'),
         }
     }
-
     function updateFields() {
         getData().then(() => {
             if (!data.game) {
@@ -208,7 +202,6 @@
             el.main.className = ''
             el.main.classList.add(data.game)
         })
-
     }
 
     window.onload = main

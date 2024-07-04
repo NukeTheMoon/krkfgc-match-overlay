@@ -1,14 +1,19 @@
-// our dependencies
-const express = require('express');
-const app = express();
-const router = express.Router();
-const port = 2137
-const fs = require('fs');
-var cors = require('cors')
+'use strict';
 
-app.use(cors({credentials: true, origin: true}))
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+const express = require('express');
+const cors = require('cors')
+const fs = require('fs');
+
+const app = express();
+const port = 2137
+const defaultData = {
+    game: '',
+    title: '',
+    p1name: '',
+    p1score: '0',
+    p2name: '',
+    p2score: '0'
+}
 
 function getData() {
     return fs.readFileSync('./data.json', { encoding: 'utf-8'})
@@ -17,29 +22,20 @@ function setData(value) {
     fs.writeFileSync('./data.json', JSON.stringify(value))
 }
 
-const defaultData = {
-    game: '',
-    title: '',
-    player1name: '',
-    player1score: '0',
-    player2name: '',
-    player2score: '0'
-}
+app.use(cors({ credentials: true, origin: true }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.get('/data', (req, res) => {
     res.send(getData())
 });
-
 app.post('/data', (req, res) => {
     setData(req.body)
     res.send("OK")
 })
-
 app.delete('/data', (req, res) => {
     setData(defaultData)
     res.send("OK")
 })
 
-
-// set the server to listen on port 3000
 app.listen(port, () => console.log(`Listening on port ${port}`));

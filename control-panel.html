@@ -32,11 +32,11 @@
     <div class="unsaved-target">
         Game
         <select name="game" id="game">
-            <option value="">overlay hidden</option>
-            <option value="uni2">UNI2</option>
-            <option value="acpr">ACPR</option>
-            <option value="bbcf">BBCF</option>
-            <option value="t8">T8</option>
+            <option value="">(overlay hidden)</option>
+            <option value="uni2">Under Night 2</option>
+            <option value="acpr">Guilty Gear Accent Core Plus R</option>
+            <option value="bbcf">BlazBlue Cross Fiction</option>
+            <option value="t8">Tekken 8</option>
         </select>
     </div>
 
@@ -49,12 +49,12 @@
     <div class="row">
         <div class="row unsaved-target">
             Name
-            <input type="text" id="player1name">
+            <input type="text" id="p1name">
         </div>
 
         <div class="row unsaved-target">
             Score
-            <input type="number" class="score" id="player1score" value="0">
+            <input type="number" class="score" id="p1score" value="0">
         </div>
     </div>
 
@@ -62,12 +62,12 @@
     <div class="row">
         <div class="row unsaved-target">
             Name
-            <input type="text" id="player2name">
+            <input type="text" id="p2name">
         </div>
 
         <div class="row unsaved-target">
             Score
-            <input type="number" class="score" id="player2score" value="0">
+            <input type="number" class="score" id="p2score" value="0">
         </div>
     </div>
 
@@ -79,46 +79,34 @@
     'use strict';
 
     const api = 'http://localhost:2137/data'
-    const q = document.querySelector.bind(document)
-    const qa = document.querySelectorAll.bind(document)
     const unsavedTargetSelector = '.unsaved-target'
     const unsavedClass = 'unsaved'
-
-    const getData = () => {
-        return fetch(api).then((res) => {
-            return res.text()
-        }).then(text => {
-            data = JSON.parse(text)
-        })
-    }
-    const setData = (val) => {
-        return fetch(api, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                },
-            body: JSON.stringify(val),
-        })
-    }
-    const resetData = (val) => {
-        return fetch(api, {
-            method: "DELETE",
-        })
-    }
+    const q = document.querySelector.bind(document)
+    const qa = document.querySelectorAll.bind(document)
 
     // const defaultData = {
     //     game: '',
     //     title: '',
-    //     player1name: '',
-    //     player1score: '0',
-    //     player2name: '',
-    //     player2score: '0'
+    //     p1name: '',
+    //     p1score: '0',
+    //     p2name: '',
+    //     p2score: '0'
     // }
 
     let data
     let el
     let tempData
     let initDone
+
+    const getData = () => fetch(api).then(res => res.text()).then(text => { data = JSON.parse(text) })
+    const setData = val => fetch(api, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(val),
+    })
+    const resetData = () => fetch(api, { method: "DELETE" })
 
     function main() {
         initData().then(() => {
@@ -127,37 +115,33 @@
             initDone = true
         })
     }
-
     function initData() {
         return getData().then(() => {
             tempData = { ...data }
         })
-
     }
-
     function initEls() {
         el = {
             form: q('#form'),
             game: q('#game'),
             title: q('#title'),
-            player1name: q('#player1name'),
-            player1score: q('#player1score'),
-            player2name: q('#player2name'),
-            player2score: q('#player2score'),
+            p1name: q('#p1name'),
+            p1score: q('#p1score'),
+            p2name: q('#p2name'),
+            p2score: q('#p2score'),
             update: q('#update'),
             reset: q('#_reset'),
         }
 
         el.game.oninput = ({ target }) => { setTempField(target, 'game') }
         el.title.oninput = ({ target }) => { setTempField(target, 'title') }
-        el.player1name.oninput = ({ target }) => { setTempField(target, 'player1name') }
-        el.player1score.oninput = ({ target }) => { setTempField(target, 'player1score') }
-        el.player2name.oninput = ({ target }) => { setTempField(target, 'player2name') }
-        el.player2score.oninput = ({ target }) => { setTempField(target, 'player2score') }
+        el.p1name.oninput = ({ target }) => { setTempField(target, 'p1name') }
+        el.p1score.oninput = ({ target }) => { setTempField(target, 'p1score') }
+        el.p2name.oninput = ({ target }) => { setTempField(target, 'p2name') }
+        el.p2score.oninput = ({ target }) => { setTempField(target, 'p2score') }
         el.update.onclick = update
         el.reset.onclick = reset
     }
-
     function setTempField(target, field) {
         if (!initDone) return
 
@@ -169,21 +153,17 @@
             target.closest(unsavedTargetSelector).classList.add(unsavedClass)
         }
     }
-
     function populateFields() {
-        Object.keys(data).forEach((k) => el[k].value = data[k])
+        Object.keys(data).forEach(k => el[k].value = data[k])
     }
-
     function clearUnsaved() {
         Array.from(qa(unsavedTargetSelector)).forEach(el => el.classList.remove(unsavedClass) )
     }
-
     function update() {
         setData(tempData).then(() => {
             clearUnsaved()
         })
     }
-
     function reset() {
         resetData().then(() => {
             el.form.reset()
