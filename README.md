@@ -12,5 +12,6 @@ pass match-overlay.html to OBS browser source as local file, width=1920 height=1
 
 TODO
 
+font-stretch and font-weight doen't work in obs
 add spectral vs generation
 animate updates
