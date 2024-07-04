@@ -18,6 +18,5 @@ select a game in control-panel.html and hit UPDATE OVERLAY!
 # TODO
 
 - [ ] bug: font-stretch doesn't work in OBS when using font-face
-- [ ] feat: add spectral vs generation support
 - [ ] feat: animate updates
 - [ ] feat: error states
