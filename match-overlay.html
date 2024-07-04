@@ -1,18 +1,18 @@
 <style>
+    /* font face not working wtf */
     @font-face {
-        font-family: bahnschrift;
-        font-stretch: condensed normal 50%;
-        src: url("assets/bahnschrift.ttf") format('truetype');
+        font-family: bahnschrift2;
+        src: local("Bahnschrift") url("assets/bahnschrift.ttf");
     }
 
     body {
-        font-family: bahnschrift;
+        font-family: bahnschrift2;
         margin: 0;
         padding: 0;
         font-weight: 800;
     }
     p {
-        font-stretch: 50%;
+        font-stretch: condensed;
         color: #fff;
         text-transform: uppercase;
         margin: 0;
@@ -108,19 +108,28 @@
 
     .acpr #players {
         top: 21px;
-        gap: 335px;
+    }
+    .acpr #player1 {
+        margin-right: 335px; 
     }
     .bbcf #players {
         top: 17px;
-        gap: 335px;
+    }
+    .bbcf #player1 {
+        margin-right: 335px;
     }
     .t8 #players {
         top: 11px;
-        gap: 490px;
+    }
+    .t8 #player1 {
+        margin-right: 490px;
     }
     .uni2 #players {
         top: 22px;
         gap: 354px;
+    }
+    .uni2 #player1 {
+        margin-right: 354px;
     }
     .uni2 #logo {
         top: 158px;
