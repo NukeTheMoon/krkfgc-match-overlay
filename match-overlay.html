@@ -197,7 +197,7 @@
                 return
             }
 
-            Object.keys(data).forEach((k) => { if (el[k]) el[k].innerHTML = data[k] })
+            Object.keys(data).forEach(k => { if (el[k]) el[k].innerHTML = data[k] })
 
             el.main.className = ''
             el.main.classList.add(data.game)
