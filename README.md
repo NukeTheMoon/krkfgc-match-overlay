@@ -35,4 +35,5 @@ A: pink background means edited but unsaved
 
 - [ ] bug: font-stretch doesn't work in OBS when using font-face
 - [ ] feat: animate updates
+- [ ] feat: cycling multiple logos
 - [ ] feat: error states
