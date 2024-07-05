@@ -103,14 +103,20 @@
     #p2score {
         left: 0;
     }
-    #logo {
+    #logoBox {
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
         top: 922px;
     }
-    #logo img {
-        object-fit: cover;
+    #logoBox img {
+        display: none;
+        object-fit: contain;
+        height: 136px;
+    }
+    #logoBox.bijatyki #bijatyki,
+    #logoBox.kusoge #kusoge {
+        display: block;
     }
 
     .acpr #players {
@@ -142,11 +148,11 @@
     .uni2 #p1 {
         margin-right: 354px;
     }
-    .uni2 #logo {
+    .uni2 #logoBox {
         top: 158px;
     }
-    .uni2 #logo img {
-        width: 57px;
+    .uni2 #logoBox img {
+        height: 82px;
     }
     .svg #titleBox  {
         top: 122px;
@@ -176,8 +182,9 @@
             <p id="p2name"></p>
         </div>
     </div>
-    <div id="logo">
-        <img src="assets/logo.png">
+    <div id="logoBox">
+        <img id="bijatyki" src="assets/bijatyki.png">
+        <img id="kusoge" src="assets/kusoge.png">
     </div>
 </main>
 
@@ -206,6 +213,7 @@
             p1score: q('#p1score'),
             p2name: q('#p2name'),
             p2score: q('#p2score'),
+            logoBox: q('#logoBox')
         }
     }
     function updateFields() {
@@ -217,8 +225,8 @@
 
             Object.keys(data).forEach(k => { if (el[k]) el[k].innerHTML = data[k] })
 
-            el.main.className = ''
-            el.main.classList.add(data.game)
+            el.main.className = data.game
+            el.logoBox.className = data.logo
         })
     }
 

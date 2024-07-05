@@ -12,7 +12,8 @@ const defaultData = {
     p1name: '',
     p1score: '0',
     p2name: '',
-    p2score: '0'
+    p2score: '0',
+    logo: 'bijatyki'
 }
 
 function getData() {

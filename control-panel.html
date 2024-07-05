@@ -72,6 +72,14 @@
         </div>
     </div>
 
+    <div class="unsaved-target">
+        Logo
+        <select name="logo" id="logo">
+            <option value="bijatyki">BIJATYKI W KRAKOWIE</option>
+            <option value="kusoge">KING OF KUSOGE</option>
+        </select>
+    </div>
+
     <button type="button" id="update">UPDATE OVERLAY!</button>
     <button type="button" id="_reset">reset everything</button>
 </form>
@@ -91,7 +99,8 @@
     //     p1name: '',
     //     p1score: '0',
     //     p2name: '',
-    //     p2score: '0'
+    //     p2score: '0',
+    //     logo: 'bijatyki'
     // }
 
     let data
@@ -130,6 +139,7 @@
             p1score: q('#p1score'),
             p2name: q('#p2name'),
             p2score: q('#p2score'),
+            logo: q('#logo'),
             update: q('#update'),
             reset: q('#_reset'),
         }
@@ -140,6 +150,7 @@
         el.p1score.oninput = ({ target }) => { setTempField(target, 'p1score') }
         el.p2name.oninput = ({ target }) => { setTempField(target, 'p2name') }
         el.p2score.oninput = ({ target }) => { setTempField(target, 'p2score') }
+        el.logo.oninput = ({ target }) => { setTempField(target, 'logo') }
         el.update.onclick = update
         el.reset.onclick = reset
     }
