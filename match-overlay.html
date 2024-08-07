@@ -1,6 +1,6 @@
 <style>
     @font-face {
-        /* font-stretch not working in OBS :( */
+        /* font-stretch doesn't work in OBS :( */
         font-family: bahnschriftLocal;
         src: url('assets/bahnschrift.ttf') format('truetype-variations');
         font-weight: normal 800;
@@ -30,7 +30,9 @@
     main.bbcf,
     main.svg,
     main.t8,
-    main.uni2 {
+    main.uni2,
+    main.strive,
+    main.sf6 {
         opacity: 1;
     }
 
@@ -41,12 +43,12 @@
         transform: translateX(-50%);
         background-image: url('assets/titlebox.svg');
         background-repeat: no-repeat;
-        width: 403px;
-        height: 51px;
+        width: 357px;
+        height: 30px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 30px;
+        font-size: 18px;
     }
     #titleBox p {
         margin-top: 2px;
@@ -59,8 +61,8 @@
     }
     #p1,
     #p2 {
-        width: 628px;
-        height: 63px;
+        width: 496.6px;
+        height: 49px;
         background-size: contain;
         background-repeat: no-repeat;
         position: relative;
@@ -75,9 +77,9 @@
     #p2name {
         position: absolute;
         top: 2px;
-        width: 530px;
+        width: 440px;
         height: 100%;
-        font-size: 32px;
+        font-size: 26px;
         line-height: normal;
         display: flex;
         justify-content: center;
@@ -86,10 +88,10 @@
     #p1score,
     #p2score {
         position: absolute;
-        width: 160px;
+        width: 126px;
         height: 100%;
         top: 2px;
-        font-size: 44px;
+        font-size: 36px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -120,7 +122,7 @@
     }
 
     .acpr #players {
-        top: 21px;
+        top: 12px;
     }
     .acpr #p1 {
         margin-right: 335px;
@@ -132,10 +134,7 @@
         margin-right: 335px;
     }
     .svg #titleBox  {
-        top: 122px;
-        width: 316px;
-        height: 40px;
-        font-size: 24px;
+        top: 110px;
     }
     .svg #players {
         top: 80px;
@@ -143,28 +142,35 @@
     .svg #p1 {
         margin-right: 394px;
     }
-    .t8 #titleBox  {
-        width: 316px;
-        height: 40px;
-        font-size: 24px;
-    }
     .t8 #players {
-        top: 11px;
+        top: 14px;
     }
     .t8 #p1 {
-        margin-right: 490px;
+        margin-right: 580px;
     }
     .uni2 #players {
-        top: 22px;
+        top: 0px;
     }
     .uni2 #p1 {
         margin-right: 354px;
     }
     .uni2 #logoBox {
-        top: 158px;
+        top: 168px;
     }
     .uni2 #logoBox img {
-        height: 82px;
+        height: 120px;
+    }
+    .strive #players {
+        top: 20px;
+    }
+    .strive #p1 {
+        margin-right: 420px;
+    }
+    .sf6 #players {
+        top: 12px;
+    }
+    .sf6 #p1 {
+        margin-right: 440px;
     }
 </style>
 
@@ -191,12 +197,11 @@
 <script>
     'use strict';
 
-    const q = document.querySelector.bind(document)
-    const api = 'http://localhost:2137/data'
-
     let el
     let data
 
+    const api = 'http://localhost:2137/data'
+    const q = document.querySelector.bind(document)
     const getData = () => fetch(api).then((res) => res.text()).then(text => { data = JSON.parse(text) })
 
     function main() {

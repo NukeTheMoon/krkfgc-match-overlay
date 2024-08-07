@@ -1,17 +1,19 @@
 # HOW TO
 
+1. run:
+
 ```
 npm i
 node server.js
 ```
 
-install assets/bahnschrift.ttf
+2. install assets/bahnschrift.ttf
 
-open control-panel.html in a browser that isn't IE or Lynx
+3. open control-panel.html in a browser that isn't IE or Lynx
 
-pass match-overlay.html to OBS browser source as local file, width=1920 height=1080
+4. pass match-overlay.html to OBS browser source as local file, width=1920 height=1080
 
-select a game in control-panel.html and hit UPDATE OVERLAY!
+5. select a game in control-panel.html and hit UPDATE OVERLAY!
 
 # FAQ
 
